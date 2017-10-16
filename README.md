@@ -6,3 +6,4 @@ running bokeh version 0.12.9.
 * **bokeh_wrap.py** -- defines functions **hist( )** and **timeplot( )**
 * **BokehWrapDemo.ipynb** -- Jupyter Notebook demonstrating use of **bokeh_wrap.py**
 * **data.txt** -- sample data for reading into **BokehWrapDemo.ipynb**
+* **compare_matplotlib.ipynb** -- very basic comparison of plotting with matplotlib vs. bokeh
