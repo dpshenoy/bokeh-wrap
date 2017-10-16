@@ -3,7 +3,7 @@ Convenience wrapper functions for plotting with Bokeh in Jupyter Notebooks.
 
 Requires Bokeh version 0.12.9.
 
-Note: for Python 3.5, to get ipywidgets.interact to work,
+Note: for Python 3.5, to get ipywidgets.interact to work in function hist(),
 pip install widgetsnbextension=2.0.0 instead of a later version.
 """
 import warnings
@@ -21,6 +21,7 @@ output_notebook()
 def hist(df=pd.DataFrame(), colname=''):
     """
     Plots a histogram of values in one column of a Pandas DataFrame object.
+    Adds interactive slides for number of bins and nth percentile marker.
 
     Arguments
     ---------
@@ -39,7 +40,7 @@ def hist(df=pd.DataFrame(), colname=''):
 
     if not isinstance(df, pd.DataFrame):
         raise TypeError(
-            'Value passed as  arg "df" not a Pandas DataFrame object.')
+            'Value passed as arg "df" not a Pandas DataFrame object.')
     if colname not in df.columns:
         raise ValueError('Column '+colname+' not in supplied DataFrame.')
     if not np.issubdtype(df[colname].dtype, np.number):
@@ -50,10 +51,14 @@ def hist(df=pd.DataFrame(), colname=''):
     init_n_bins = int(np.sqrt(vals_to_bin.shape[0]))
     counts, edges = np.histogram(vals_to_bin, bins=init_n_bins)
     zeros = np.zeros(counts.shape[0])
+    q = 50
+    ntile = np.percentile(vals_to_bin, q=q)
 
     p = figure(plot_height=200, plot_width=600, responsive=True)
     h = p.quad(left=edges[:-1], right=edges[1:],
                top=counts, bottom=zeros, fill_alpha=0.8)
+    l = p.line(x=[ntile,ntile], y=[0.,1.2*counts.max()], line_dash='dashed',
+               line_width=3, line_color='black')
 
     p.xaxis.axis_label = 'binned value of column "'+colname+'"'
     p.xaxis.axis_label_text_font_style = 'normal'
@@ -71,7 +76,7 @@ def hist(df=pd.DataFrame(), colname=''):
     p.min_border_left = 50
     p.min_border_right = 50
 
-    def update(n_bins):
+    def update(n_bins, nth_percentile):
         c, e = np.histogram(vals_to_bin, bins=n_bins)
         z = np.zeros(c.shape[0])
         newbars = {
@@ -81,9 +86,19 @@ def hist(df=pd.DataFrame(), colname=''):
             'bottom': z
         }
         h.data_source.data = newbars
+
+        n = np.percentile(vals_to_bin, q=nth_percentile)
+        newperc = {
+            'x': [n,n],
+            'y': [0.,1.2*c.max()]
+        }
+        l.data_source.data = newperc
+
         bwdth = str(np.around(e[1]-e[0], decimals=2))
-        title = 'bin width = {b} for number of bins = {n}'.format(b=bwdth,
-                                                                n=str(n_bins))
+        title = 'bin width = {bwdth}'.format(bwdth=bwdth)
+        title += ' for number of bins = {n_bins}'.format(n_bins=str(n_bins))
+        title += '                 '
+        title += '{p}th percentile = {n}'.format(p=str(nth_percentile),n=str(n))
         p.title.text = title
         p.title.text_font_size = '12pt'
         p.title.align = "center"
@@ -92,7 +107,7 @@ def hist(df=pd.DataFrame(), colname=''):
     # silence the one-time UserWarning due to calling interact() before show()
     warnings.filterwarnings('ignore', category=UserWarning)
 
-    interact(update, n_bins=(1, 2*init_n_bins))
+    interact(update, n_bins=(1, 2*init_n_bins), nth_percentile=(0,100))
     show(p, notebook_handle=True)
 
 
