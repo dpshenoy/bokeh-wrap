@@ -54,7 +54,7 @@ def hist(df=pd.DataFrame(), colname=''):
     q = 50
     ntile = np.percentile(vals_to_bin, q=q)
 
-    p = figure(plot_height=200, plot_width=600, responsive=True)
+    p = figure(plot_height=200, plot_width=600, sizing_mode='scale_width')
     h = p.quad(left=edges[:-1], right=edges[1:],
                top=counts, bottom=zeros, fill_alpha=0.8)
     l = p.line(x=[ntile,ntile], y=[0.,1.2*counts.max()], line_dash='dashed',
@@ -151,8 +151,8 @@ def timeplot(df=pd.DataFrame(), timecol='', datacol='', plottype='scatter'):
 
     tools = ['pan,wheel_zoom,box_zoom,save,reset']
 
-    p = figure(tools=tools, plot_width=900, plot_height=400, responsive=True,
-               x_axis_type="datetime")
+    p = figure(tools=tools, plot_width=900, plot_height=400, 
+               sizing_mode='scale_width', x_axis_type="datetime")
 
     if plottype == 'scatter':
         p.circle(x=timecol, y=datacol, source=source, color='blue', alpha=0.5,
