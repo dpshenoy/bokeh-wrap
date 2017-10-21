@@ -10,7 +10,7 @@ import warnings
 import numpy as np
 import pandas as pd
 
-from ipywidgets import interact
+from ipywidgets import interact, widgets
 from bokeh.plotting import figure, ColumnDataSource
 from bokeh.models import DatetimeTickFormatter
 from bokeh.io import push_notebook, show, output_notebook
@@ -32,7 +32,7 @@ def hist(df=pd.DataFrame(), colname=''):
 
         # add path to where bokeh_wrap/ repo is cloned
         import sys; sys.path.append('/abs/path/to/github/dpshenoy')
-        from bokeh_wrap import bokeh_wrap as bw
+        import bokeh_wrap as bw
 
         df = pd.read_table("data.txt")
         bw.hist(df=df, colname=df.columns[0])
@@ -60,6 +60,7 @@ def hist(df=pd.DataFrame(), colname=''):
     l = p.line(x=[ntile,ntile], y=[0.,1.2*counts.max()], line_dash='dashed',
                line_width=3, line_color='black')
 
+    p.title.text = 'temporary title' # must create before update() called, for proper placement
     p.xaxis.axis_label = 'binned value of column "'+colname+'"'
     p.xaxis.axis_label_text_font_style = 'normal'
     p.xaxis.axis_label_text_font_size = '12pt'
@@ -94,22 +95,18 @@ def hist(df=pd.DataFrame(), colname=''):
         }
         l.data_source.data = newperc
 
-        bwdth = str(np.around(e[1]-e[0], decimals=2))
-        title = 'bin width = {bwdth}'.format(bwdth=bwdth)
-        title += ' for number of bins = {n_bins}'.format(n_bins=str(n_bins))
+        title = 'bin width = '+str(np.around(e[1]-e[0], decimals=2))
+        title += ' for number of bins = '+str(n_bins)
         title += '                 '
-        title += '{p}th percentile = {n}'.format(p=str(nth_percentile),n=str(n))
+        title += str(nth_percentile)+'th percentile = '+str(n)
+
         p.title.text = title
-        p.title.text_font_size = '12pt'
-        p.title.align = "center"
+        p.title.align = "left"
         push_notebook()
 
-    # silence the one-time UserWarning due to calling interact() before show()
-    warnings.filterwarnings('ignore', category=UserWarning)
-
-    interact(update, n_bins=(1, 2*init_n_bins), nth_percentile=(0,100))
     show(p, notebook_handle=True)
-
+    n_bins=widgets.IntSlider(min=1, max=2*init_n_bins, step=1, value=10)
+    interact(update, n_bins=n_bins, nth_percentile=(0,100))
 
 def timeplot(df=pd.DataFrame(), timecol='', datacol='', plottype='scatter'):
     """
@@ -127,7 +124,7 @@ def timeplot(df=pd.DataFrame(), timecol='', datacol='', plottype='scatter'):
 
         # add path to where bokeh_wrap/ repo is cloned
         import sys; sys.path.append('/abs/path/to/github/dpshenoy')
-        from bokeh_wrap import bokeh_wrap as bw
+        import bokeh_wrap as bw
 
         df = pd.read_table("data.txt")
         bw.timeplot(df=df, timecol='date', datacol='amt', type='line')
