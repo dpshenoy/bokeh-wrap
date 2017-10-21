@@ -1,7 +1,7 @@
 """
 Convenience wrapper functions for plotting with Bokeh in Jupyter Notebooks.
 
-Requires Bokeh version 0.12.9.
+Created using Bokeh version 0.12.10.
 
 Note: for Python 3.5, to get ipywidgets.interact to work in function hist(),
 pip install widgetsnbextension=2.0.0 instead of a later version.
