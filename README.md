@@ -1,9 +1,25 @@
 # bokeh-wrap
-Convenience wrapper for [bokeh](https://bokeh.pydata.org/en/latest/) plots.  Works with Python 3.5 or 3.6,
-running bokeh version 0.12.9 or 0.12.10.
+Convenience wrapper using [bokeh][bokeh-home] for plotting interactive histograms and time series data.
 
-## Contents
-* **bokeh_wrap.py** -- defines functions **hist( )** and **timeplot( )**
-* **BokehWrapDemo.ipynb** -- Jupyter Notebook demonstrating use of **bokeh_wrap.py**
-* **data.txt** -- sample data for reading into **BokehWrapDemo.ipynb** for plotting with function **hist( )**
-* **time_data.csv** -- sample data for reading into **BokehWrapDemo.ipynb** for plotting with function **timeplot( )**
+## Requirements:
+
+* Python 3
+* conda
+
+Easiest to install both via [Anaconda][anaconda-download]
+
+## Usage
+
+Create a virtual environment, activate it, from within it install an IPython kernel using this environment, then start a Jupyter Notebok server:
+
+    $ conda env create -f environment.yml -q
+    $ source activate bokeh_wrap
+    (bokeh_wrap) $ python -m ipykernel install --user --name bokeh_wrap --display-name "Python bokeh_wrap"
+    (bokeh_wrap) $ jupyter notebook
+
+Open notebook **BokehWrapDemo.ipynb** in the Jupyter Notebook GUI, and then choose this environment's kernel as one of the options under **Kernel > Change Kernel**:
+
+![change kernel](https://raw.githubusercontent.com/dpshenoy/bokeh_wrap/master/choose_kernel.png)
+
+[anaconda-download]: https://www.anaconda.com/download/
+[bokeh-home]: https://bokeh.pydata.org/en/latest/
