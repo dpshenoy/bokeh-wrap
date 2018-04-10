@@ -4,7 +4,7 @@ Convenience wrapper functions for plotting with Bokeh in Jupyter Notebooks.
 Created using Bokeh version 0.12.10.
 
 Note: for Python 3.5, to get ipywidgets.interact to work in function hist(),
-pip install widgetsnbextension=2.0.0 instead of a later version.
+use widgetsnbextension=2.0.0 instead of a later version.
 """
 import warnings
 import numpy as np
@@ -57,10 +57,10 @@ def hist(df=pd.DataFrame(), colname=''):
     p = figure(plot_height=200, plot_width=600, sizing_mode='scale_width')
     h = p.quad(left=edges[:-1], right=edges[1:],
                top=counts, bottom=zeros, fill_alpha=0.8)
-    l = p.line(x=[ntile,ntile], y=[0.,1.2*counts.max()], line_dash='dashed',
-               line_width=3, line_color='black')
+    ln = p.line(x=[ntile, ntile], y=[0., 1.2*counts.max()], line_dash='dashed',
+                line_width=3, line_color='black')
 
-    p.title.text = 'temporary title' # must create before update() called, for proper placement
+    p.title.text = 'temporary title'  # must create before update() called
     p.xaxis.axis_label = 'binned value of column "'+colname+'"'
     p.xaxis.axis_label_text_font_style = 'normal'
     p.xaxis.axis_label_text_font_size = '12pt'
@@ -90,10 +90,10 @@ def hist(df=pd.DataFrame(), colname=''):
 
         n = np.percentile(vals_to_bin, q=nth_percentile)
         newperc = {
-            'x': [n,n],
-            'y': [0.,1.2*c.max()]
+            'x': [n, n],
+            'y': [0., 1.2*c.max()]
         }
-        l.data_source.data = newperc
+        ln.data_source.data = newperc
 
         title = 'bin width = '+str(np.around(e[1]-e[0], decimals=2))
         title += ' for number of bins = '+str(n_bins)
@@ -105,8 +105,9 @@ def hist(df=pd.DataFrame(), colname=''):
         push_notebook()
 
     show(p, notebook_handle=True)
-    n_bins=widgets.IntSlider(min=1, max=2*init_n_bins, step=1, value=10)
-    interact(update, n_bins=n_bins, nth_percentile=(0,100))
+    n_bins = widgets.IntSlider(min=1, max=2*init_n_bins, step=1, value=10)
+    interact(update, n_bins=n_bins, nth_percentile=(0, 100))
+
 
 def timeplot(df=pd.DataFrame(), timecol='', datacol='', plottype='scatter'):
     """
@@ -148,7 +149,7 @@ def timeplot(df=pd.DataFrame(), timecol='', datacol='', plottype='scatter'):
 
     tools = ['pan,wheel_zoom,box_zoom,save,reset']
 
-    p = figure(tools=tools, plot_width=900, plot_height=400, 
+    p = figure(tools=tools, plot_width=900, plot_height=400,
                sizing_mode='scale_width', x_axis_type="datetime")
 
     if plottype == 'scatter':

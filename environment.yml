@@ -10,14 +10,16 @@ dependencies:
 - bokeh=0.12.10=py35_0
 - ca-certificates=2018.1.18=0
 - certifi=2018.1.18=py35_0
+- cycler=0.10.0=py35_0
 - decorator=4.2.1=py35_0
 - entrypoints=0.2.3=py35_1
+- freetype=2.8.1=0
 - html5lib=1.0.1=py_0
 - icu=58.2=0
 - ipykernel=4.8.2=py35_0
 - ipython=6.3.1=py35_0
 - ipython_genutils=0.2.0=py35_0
-- ipywidgets=6.0.1=py35_0
+- ipywidgets=6.0.0=py35_0
 - jedi=0.11.1=py35_0
 - jinja2=2.10=py35_0
 - jpeg=9b=2
@@ -25,11 +27,15 @@ dependencies:
 - jupyter=1.0.0=py_1
 - jupyter_client=5.2.3=py35_0
 - jupyter_console=5.2.0=py35_0
+- jupyter_contrib_core=0.3.3=py35_1
 - jupyter_core=4.4.0=py_0
+- jupyter_nbextensions_configurator=0.4.0=py35_0
+- kiwisolver=1.0.1=py35_1
 - libgfortran=3.0.0=0
 - libpng=1.6.34=0
 - libsodium=1.0.16=0
 - markupsafe=1.0=py35_0
+- matplotlib=2.2.2=py35_1
 - mistune=0.8.3=py_0
 - nbconvert=5.3.1=py_1
 - nbformat=4.4.0=py35_0
@@ -48,6 +54,7 @@ dependencies:
 - prompt_toolkit=1.0.15=py35_0
 - ptyprocess=0.5.2=py35_0
 - pygments=2.2.0=py35_0
+- pyparsing=2.2.0=py35_0
 - pyqt=5.6.0=py35_4
 - python=3.5.5=1
 - python-dateutil=2.7.2=py_0
@@ -80,6 +87,7 @@ dependencies:
   - ipython-genutils==0.2.0
   - jupyter-client==5.2.3
   - jupyter-console==5.2.0
+  - jupyter-contrib-core==0.3.3
   - jupyter-core==4.4.0
+  - jupyter-nbextensions-configurator==0.4.0
   - prompt-toolkit==1.0.15
-
